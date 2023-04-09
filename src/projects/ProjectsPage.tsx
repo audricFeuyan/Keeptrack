@@ -3,6 +3,7 @@ import ProjectList from './ProjectList';
 import { Project } from './Project';
 import { ProjectService } from './ProjectService';
 import ProjectDetail from './ProjectDetail';
+import ProjectForm from './ProjectForm';
 
 const projectService = new ProjectService();
 
@@ -46,7 +47,7 @@ const ProjectsPage: FC = (): ReactElement => {
                     }
                     {
                         currentProject && 
-                        <ProjectDetail 
+                        <ProjectForm
                             project = {currentProject}
                         />
                     }
