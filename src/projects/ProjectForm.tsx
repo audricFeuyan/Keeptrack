@@ -18,6 +18,7 @@ const projectFormInitialValues = {
 };
 
 const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): ReactElement => {
+    
     return(
         <div className="cols-sm">
             <h2>Update project</h2>
