@@ -10,11 +10,11 @@ interface ProjectItemProps {
 const ProjectItem: FC<ProjectItemProps> = ({ project, projectSelectedHandler }: ProjectItemProps): ReactElement => {
 
     const setOnProjectSelected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>):void => {
-        console.log("Project selected: ", project);
+       
         projectSelectedHandler(event, project);
     };
 
-    console.log("Project Item is starting");
+    
     return(
         <div className="cols-sm" onClick={(e) => setOnProjectSelected(e)}>
             <div className="card">

@@ -10,7 +10,7 @@ export class ProjectService {
     }
 
     public async patchProject(projectId: number, partialProject: PartialProject): Promise<any> {
-        const response = await fetch(baseUrl + '/project/'+projectId, {
+        const response = await fetch(baseUrl + '/projects/'+projectId, {
             method: 'PATCH',
             body: JSON.stringify(partialProject),
             headers: {

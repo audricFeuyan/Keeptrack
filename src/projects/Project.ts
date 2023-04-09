@@ -1,9 +1,9 @@
 export interface Project {
-    id: number | undefined;
+    id: number;
     name: string;
     description: string;
     imageUrl: string;
-    contractTypeId: number | undefined;
+    contractTypeId: number;
     contractSignedOn: Date;
     budget: number;
     isActive: boolean;

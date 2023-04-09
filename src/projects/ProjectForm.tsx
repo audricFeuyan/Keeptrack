@@ -1,6 +1,7 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Project } from './Project';
+import { ProjectService } from './ProjectService';
 
 interface ProjectFormProps {
     project: Project
@@ -18,12 +19,33 @@ const projectFormInitialValues = {
 };
 
 const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): ReactElement => {
-    
+    const [currentProject, setCurrentProject] = useState<Project | null>(null);
+    const projectService = new ProjectService();
+
+    useEffect(()=>{
+        setCurrentProject(project);
+    }, [currentProject]);
+
+    const handleFieldBlur = (projectId: number, e: any, callback: any) => {
+        callback(e);
+        console.log(e);
+        const value = e.currentTarget.value;
+        const key = e.currentTarget.name;
+        const jsonText = `{ "${key}": "${value}" }`;
+        const patchPayload = JSON.parse(jsonText);
+        projectService.patchProject(projectId, patchPayload).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
     return(
         <div className="cols-sm">
             <h2>Update project</h2>
             <Formik
                 initialValues={project}
+                enableReinitialize={true}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(()=>{
                         alert(JSON.stringify(values, null, 2));
@@ -63,7 +85,7 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): React
                                     name="name" 
                                     type="text"
                                     onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    onBlur={e => handleFieldBlur(values.id, e, handleBlur)}
                                     value={values.name} 
                                 />
                                 <p>
@@ -79,7 +101,7 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): React
                                     name="description" 
                                     type="text"
                                     onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    onBlur={e => handleFieldBlur(values.id, e, handleBlur)}
                                     value={values.description} 
                                 />
                                 <p>
@@ -89,7 +111,7 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): React
                                 </p>
                             </div>
 
-                            <button type="submit" disabled={isSubmitting} >Save</button>
+                            {/*<button type="submit" disabled={isSubmitting} >Save</button>*/}
                         </form>
                     )
                 }

@@ -28,8 +28,7 @@ const ProjectsPage: FC = (): ReactElement => {
         getProjects();
     }, []);
 
-    console.log("ProjectsPage is starting: ", currentProject);
-
+    
     return(
         <>
             <h1>Projects</h1>

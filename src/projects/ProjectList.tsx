@@ -9,7 +9,7 @@ interface ProjectListProps {
 
 const  ProjectList: FC<ProjectListProps> = ({ projects, projectSelectedHandler }: ProjectListProps): ReactElement => {
 
-    console.log("ProjectList is starting");
+    
     return(
         <>
             <div className="row">
