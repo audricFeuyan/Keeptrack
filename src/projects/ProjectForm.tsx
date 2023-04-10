@@ -1,5 +1,5 @@
-import { FC, ReactElement, useState, useEffect } from 'react';
 import { Formik } from 'formik';
+import { FC, ReactElement, useState } from 'react';
 import { Project } from './Project';
 import { ProjectService } from './ProjectService';
 
@@ -19,24 +19,23 @@ const projectFormInitialValues = {
 };
 
 const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): ReactElement => {
-    const [currentProject, setCurrentProject] = useState<Project | null>(null);
+    const [updatingStatus, setUpdatingStatus] = useState(0);
     const projectService = new ProjectService();
-
-    useEffect(()=>{
-        setCurrentProject(project);
-    }, [currentProject]);
 
     const handleFieldBlur = (projectId: number, e: any, callback: any) => {
         callback(e);
         console.log(e);
+        setUpdatingStatus(1);
         const value = e.currentTarget.value;
         const key = e.currentTarget.name;
         const jsonText = `{ "${key}": "${value}" }`;
         const patchPayload = JSON.parse(jsonText);
         projectService.patchProject(projectId, patchPayload).then(response => {
             console.log(response);
+            setUpdatingStatus(2);
         }).catch(error => {
             console.log(error);
+            setUpdatingStatus(2);
         });
     }
 
@@ -76,7 +75,6 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): React
                         handleChange,
                         handleBlur,
                         handleSubmit,
-                        isSubmitting
                     }) => (
                         <form onSubmit={handleSubmit}>
                             <div>
@@ -88,6 +86,14 @@ const ProjectForm: FC<ProjectFormProps> = ({ project }: ProjectFormProps): React
                                     onBlur={e => handleFieldBlur(values.id, e, handleBlur)}
                                     value={values.name} 
                                 />
+                                <span>
+                                    {
+                                        updatingStatus === 1 && "Updating..."
+                                    }
+                                    {
+                                        updatingStatus === 2 && "Done"
+                                    }
+                                </span>
                                 <p>
                                     {
                                         errors.name && touched.name && errors.name

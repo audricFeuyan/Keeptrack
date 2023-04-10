@@ -1,9 +1,8 @@
-import {FC, ReactElement, useState, useEffect} from 'react';
-import ProjectList from './ProjectList';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { Project } from './Project';
-import { ProjectService } from './ProjectService';
-import ProjectDetail from './ProjectDetail';
 import ProjectForm from './ProjectForm';
+import ProjectList from './ProjectList';
+import { ProjectService } from './ProjectService';
 
 const projectService = new ProjectService();
 

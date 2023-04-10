@@ -1,5 +1,4 @@
 import { PartialProject } from "./PartialProject";
-import { Project } from "./Project";
 
 const baseUrl = "http://localhost:3000";
 
